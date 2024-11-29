@@ -60,9 +60,20 @@ const EditPage = observer(() => {
 
 
             const initialState = await rootStore.loadWorkFlow(workflowId);
-            const { nodes, edges } = initialState.workflow;
-            setNodes(nodes);
-            setEdges(edges);
+            
+
+            if(initialState.workflow === null){
+                const emptyNodes: Node[] = [];
+                setNodes(emptyNodes);
+                const emptyEdges: Edge[] = [];
+                setEdges(emptyEdges)
+            }
+            else {
+                const { nodes, edges } = initialState.workflow;
+                setNodes(nodes);
+                setEdges(edges);
+            }
+            
         }
         fetchState().catch(console.error).finally(() => setLoading(false));
     }, []);
