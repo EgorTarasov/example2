@@ -15,4 +15,5 @@ export interface WorkFlowInfo {
     created: string;
     updated: string;
     image?: string; // Optional field for future use
+    workflow: any;
 }

@@ -1,7 +1,8 @@
 
 import { WorkFlowInfo } from "@/stores/models"
 import { WorkflowCard } from "./workflowCard"
-import { NewWorkflowCard } from "./newWorkflowCard"
+import NewWorkflowCard from "./newWorkflowCard"
+
 
 
 interface WorkflowListProps {

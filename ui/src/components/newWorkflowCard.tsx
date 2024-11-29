@@ -3,16 +3,24 @@ import { Button } from "@/components/ui/button"
 import { PlusIcon } from 'lucide-react'
 import { useState } from "react"
 import { Input } from "./ui/input"
+import { observer } from "mobx-react"
+import { useStores } from "@/hooks/useStore"
+import { useNavigate } from "@tanstack/react-router"
 
-export function NewWorkflowCard() {
+const NewWorkflowCard = observer(() => {
+    const { rootStore } = useStores()
+    const navigate = useNavigate()
     const [isExpanded, setIsExpanded] = useState(false)
     const [title, setTitle] = useState("")
 
-    const handleCreateWorkflow = () => {
+    const handleCreateWorkflow = async () => {
         // TODO: Implement workflow creation logic
         console.log("Creating new workflow:", title)
-        setTitle("")
+        const newId = await rootStore.createWorkFlow(title)
         setIsExpanded(false)
+        navigate({
+            to: `/workflow/${newId}`
+        })
     }
 
     return (
@@ -48,4 +56,6 @@ export function NewWorkflowCard() {
             )}
         </Card>
     )
-}
+})
+
+export default NewWorkflowCard

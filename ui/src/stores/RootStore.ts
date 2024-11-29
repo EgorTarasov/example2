@@ -55,6 +55,30 @@ export class RootStore {
 
     }
 
+    async createWorkFlow(title: string): Promise<string> {
+        const data = {
+            "workflow": null,
+            "title": title,
+            "fk_user_id": this.pb.authStore.record?.id,
+        };
+
+        const response = await this.pb.collection('workflows').create(data);
+        return response.id;
+
+    }
+
+    async saveWorkFlow(workflowId: string, workflowState: any) {
+        const data = {
+            "workflow": workflowState,
+        };
+        const result = await this.pb.collection('workflows').update(workflowId, data);
+        return result
+    }
+
+    async loadWorkFlow(workflowId: string) {
+        const record = await this.pb.collection('workflows').getOne<WorkFlowInfo>(workflowId);
+        return record;
+    }
 }
 // @ts-ignore
 export const rootStore = new RootStore(import.meta.env.VITE_API_URL as string);
