@@ -1,0 +1,3 @@
+- [ ] set up connection with pocketbase
+- [ ] set up simple accounting with pocketbase
+- [ ] get useToast from eshmat repo
