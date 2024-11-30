@@ -50,19 +50,21 @@ const EditPage = observer(() => {
     const [bgColor, setBgColor] = useState(initBgColor);
 
     const saveNodes = async () => {
-        const currentState = { nodes, edges };
-        const newRecord = await rootStore.saveWorkFlow(workflowId, currentState);
+        const newRecord = await rootStore.saveWorkFlow(workflowId);
         console.log(newRecord);
     }
 
     useEffect(() => {
         const fetchState = async () => {
-
-
             const initialState = await rootStore.loadWorkFlow(workflowId);
             const { nodes, edges } = initialState.workflow;
-            setNodes(nodes);
-            setEdges(edges);
+            console.log(nodes)
+            rootStore.setRootEdges(edges);
+            rootStore.setRootNodes(nodes);
+            console.log("root node on fetch",rootStore.nodes);
+            console.log(rootStore.edges);
+            setNodes(rootStore.nodes!);
+            setEdges(rootStore.edges!);            
         }
         fetchState().catch(console.error).finally(() => setLoading(false));
     }, []);
@@ -101,7 +103,9 @@ const EditPage = observer(() => {
             data: { label: `${type} node` },
         };
 
-        setNodes((nds) => nds.concat(newNode));
+        rootStore.nodes?.concat(newNode)
+
+        setNodes(rootStore.nodes!);
     };
 
     const onDragStart = (event: React.DragEvent, nodeType: string) => {
